@@ -1,0 +1,568 @@
+/* ============================================
+   CSS Custom Properties (Design Tokens)
+   ============================================ */
+:root {
+    --bg-primary: #121212;
+    --bg-secondary: #1e1e1e;
+    --bg-tertiary: #2d2d2d;
+    --text-primary: #e0e0e0;
+    --text-secondary: #a0a0a0;
+    --accent: #bb86fc;
+    --accent-hover: #9d5cff;
+    --border: #333333;
+    --success: #4ddd87;
+    --danger: #cf6679;
+    --scrollbar-bg: var(--bg-primary);
+    --scrollbar-thumb: #e0e0e0;
+    --scrollbar-thumb-hover: var(--accent);
+}
+
+/* ============================================
+   Reset & Base Styles
+   ============================================ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    padding: 20px;
+    min-height: 100vh;
+    -webkit-overflow-scrolling: touch;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* ============================================
+   Header
+   ============================================ */
+.header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    background: linear-gradient(90deg, var(--accent), var(--success));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.header p {
+    color: var(--text-secondary);
+}
+
+/* ============================================
+   Layout Components
+   ============================================ */
+.editor-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.input-section {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.result-section {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* ============================================
+   Text Area Containers
+   ============================================ */
+.text-area-container {
+    position: relative;
+}
+
+.result-area-container {
+    position: relative;
+}
+
+/* ============================================
+   Text Area Headers
+   ============================================ */
+.text-area-header {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.text-area-header.scroll-adjust {
+    right: 20px;
+}
+
+.result-header-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.text-area-actions,
+.result-actions {
+    display: flex;
+    gap: 8px;
+    pointer-events: auto;
+}
+
+#inputHeader {
+    right: 20px;
+}
+
+#resultHeader {
+    right: 20px;
+}
+
+/* ============================================
+   Unified Button Styles
+   ============================================ */
+
+/* Base button style */
+.tool-btn,
+.format-btn,
+.text-area-btn,
+.apply-btn {
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    cursor: pointer;
+    padding: 6px 10px;
+    border-radius: 6px;
+    transition: all 0.2s;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-weight: 500;
+}
+
+/* Active state */
+.tool-btn.active,
+.format-btn.active {
+    background-color: var(--accent);
+    color: white;
+}
+
+/* Hover state */
+.tool-btn:hover:not(.active),
+.format-btn:hover:not(.active),
+.text-area-btn:hover:not(.active),
+.apply-btn:hover:not(.active) {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+/* ============================================
+   Specific Button Overrides
+   ============================================ */
+
+/* Text area action buttons */
+.text-area-btn {
+    padding: 8px;
+    font-size: 16px;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Apply button */
+.apply-btn {
+    padding: 8px 12px;
+    font-size: 14px;
+}
+
+/* Clear button */
+.clear-btn:hover:not(.active) {
+    color: var(--danger);
+}
+
+/* Copy button */
+.copy-btn:hover:not(.active) {
+    color: var(--success);
+}
+
+/* ============================================
+   Toolbar
+   ============================================ */
+.toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    background-color: var(--bg-secondary);
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.tool-group,
+.format-group {
+    position: relative;
+}
+
+/* ============================================
+   Format Section
+   ============================================ */
+.format-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    background-color: var(--bg-secondary);
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* ============================================
+   Add Section
+   ============================================ */
+.add-section {
+    display: flex;
+    gap: 15px;
+    background-color: var(--bg-secondary);
+    border-radius: 10px;
+    padding: 15px;
+}
+
+.add-input {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.add-input label {
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+.add-input input {
+    background-color: var(--bg-tertiary);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px;
+    color: var(--text-primary);
+    resize: none;
+    outline: none;
+}
+
+/* ============================================
+   Textarea & Editable Area
+   ============================================ */
+.resizable-textarea {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 15px;
+    color: var(--text-primary);
+    font-size: 16px;
+    min-height: 300px;
+    height: 300px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    white-space: pre-wrap;
+    overflow-y: auto;
+    width: 100%;
+    resize: none;
+    outline: none;
+}
+
+.editable-area {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 15px;
+    color: var(--text-primary);
+    font-size: 16px;
+    min-height: 300px;
+    height: 300px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    white-space: pre-wrap;
+    overflow-y: auto;
+    width: 100%;
+    resize: none;
+    outline: none;
+}
+
+/* ============================================
+   Dropdown Menu - Glassmorphism
+   ============================================ */
+.dropdown-menu {
+    position: absolute;
+    top: calc(100% + 5px);
+    left: 0;
+    background: rgba(30, 30, 30, 0.75);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    padding: 8px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 
+                0 0 0 1px rgba(255, 255, 255, 0.03);
+    z-index: 100;
+    display: none;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 220px;
+}
+
+.dropdown-menu.show {
+    display: flex;
+    animation: dropdownAppear 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Dropdown items */
+.dropdown-item {
+    padding: 9px 14px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--text-primary);
+    font-size: 14px;
+    border: 1px solid transparent;
+    background: transparent;
+}
+
+.dropdown-item:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.dropdown-item:active {
+    background: rgba(255, 255, 255, 0.03);
+    transform: scale(0.98);
+    transition: all 0.1s ease;
+}
+
+/* Dropdown divider */
+.dropdown-divider {
+    height: 1px;
+    background: linear-gradient(
+        to right,
+        transparent,
+        rgba(255, 255, 255, 0.1),
+        rgba(255, 255, 255, 0.05),
+        transparent
+    );
+    margin: 4px 8px;
+}
+
+/* ============================================
+   Submenu - Glassmorphism
+   ============================================ */
+.submenu {
+    position: absolute;
+    left: calc(100% + 5px);
+    top: -8px;
+    background: rgba(30, 30, 30, 0.8);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    padding: 8px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4),
+                0 0 0 1px rgba(255, 255, 255, 0.03);
+    z-index: 101;
+    display: none;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 220px;
+}
+
+.dropdown-item:hover .submenu {
+    display: flex;
+    animation: submenuAppear 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ============================================
+   Inline Code Display
+   ============================================ */
+.code-value,
+.code-attr,
+.code-tag {
+    font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 13px;
+}
+
+/* ============================================
+   Custom Scrollbar
+   ============================================ */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-bg);
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--scrollbar-bg);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: 4px;
+    border: 2px solid var(--scrollbar-bg);
+    transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar-thumb-hover);
+}
+
+/* ============================================
+   Animations
+   ============================================ */
+@keyframes dropdownAppear {
+    from {
+        opacity: 0;
+        transform: translateY(-8px) scale(0.96);
+        backdrop-filter: blur(0px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        backdrop-filter: blur(20px);
+    }
+}
+
+@keyframes submenuAppear {
+    from {
+        opacity: 0;
+        transform: translateX(-6px) scale(0.96);
+        backdrop-filter: blur(0px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+        backdrop-filter: blur(24px);
+    }
+}
+
+/* ============================================
+   Responsive Design
+   ============================================ */
+@media (max-width: 768px) {
+    .toolbar,
+    .format-section {
+        flex-direction: column;
+    }
+    
+    .add-section {
+        flex-direction: column;
+    }
+    
+    .text-area-header {
+        position: relative;
+        top: 0;
+        right: 0;
+        margin-bottom: 10px;
+        justify-content: flex-end;
+    }
+    
+    .text-area-header.scroll-adjust {
+        right: 0;
+    }
+    
+    .resizable-textarea,
+    .editable-area {
+        min-height: 250px;
+        height: 250px;
+    }
+    
+    ::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+        border: 1px solid var(--scrollbar-bg);
+        border-radius: 3px;
+    }
+}
+
+/* ============================================
+   Text Statistics
+   ============================================ */
+.text-stats {
+    display: flex;
+    gap: 25px;
+    margin-left: auto;
+    padding-left: 20px;
+    align-items: center;
+}
+
+.stat-item {
+    gap: 4px;
+    color: var(--text-secondary);
+    font-size: 15px;
+    white-space: nowrap;
+}
+
+.stat-item i {
+    font-size: 16px;
+    color: var(--accent);
+    margin-right: 2px;
+}
+
+.stat-item span:first-of-type {
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: 14px;
+    min-width: 35px;
+    text-align: right;
+    margin-right: 2px;
+}
+
+.stat-label {
+    color: var(--text-secondary);
+    font-size: 15px;
+    font-weight: 500;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .text-stats {
+        margin-left: 0;
+        padding-left: 0;
+        padding-top: 15px;
+        border-left: none;
+        border-top: 1px solid var(--border);
+        justify-content: space-around;
+        width: 100%;
+    }
+}
