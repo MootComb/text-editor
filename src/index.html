@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Editor</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" href="/favicon.ico">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Text Editor</h1>
+            <p>Powerful text manipulation tool for modern workflows</p>
+        </header>
+        
+        <div class="editor-container">
+            <nav class="toolbar" aria-label="Text manipulation tools">
+                <!-- Replace Tools -->
+                <div class="tool-group">
+                    <button class="tool-btn" id="replaceBtn" aria-expanded="false">
+                        <i class="fa-solid fa-rotate"></i> Replace
+                    </button>
+                    <div class="dropdown-menu" id="replaceMenu">
+                        <div class="dropdown-item">
+                            <i class="fa-solid fa-font"></i> Case
+                            <div class="submenu">
+                                <div class="dropdown-item" data-action="uppercase">
+                                    <i class="fa-solid fa-arrow-up-a-z"></i> UPPERCASE
+                                </div>
+                                <div class="dropdown-item" data-action="lowercase">
+                                    <i class="fa-solid fa-arrow-down-a-z"></i> lowercase
+                                </div>
+                                <div class="dropdown-item" data-action="capitalizeFirst">
+                                    <i class="fa-solid fa-paragraph"></i> First letter capital
+                                </div>
+                                <div class="dropdown-item" data-action="capitalizeWords">
+                                    <i class="fa-solid fa-heading"></i> Capitalize Each Word
+                                </div>
+                                <div class="dropdown-item" data-action="invertCase">
+                                    <i class="fa-solid fa-arrow-right-arrow-left"></i> iNVERT cASE
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dropdown-item">
+                            <i class="fa-solid fa-quote-right"></i> Quotes
+                            <div class="submenu">
+                                <div class="dropdown-item" data-action="singleToDouble">
+                                    <i class="fa-solid fa-quote-right"></i> <code>' '</code> to <code>" "</code>
+                                </div>
+                                <div class="dropdown-item" data-action="doubleToSingle">
+                                    <i class="fa-solid fa-quote-left"></i> <code>" "</code> to <code>' '</code>
+                                </div>
+                                <div class="dropdown-item" data-action="singleToGuillemets">
+                                    <i class="fa-solid fa-chevron-right"></i> <code>' '</code> to <code>« »</code>
+                                </div>
+                                <div class="dropdown-item" data-action="doubleToGuillemets">
+                                    <i class="fa-solid fa-chevron-right"></i> <code>" "</code> to <code>« »</code>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dropdown-item">
+                            <i class="fa-solid fa-code"></i> HTML Entities
+                            <div class="submenu">
+                                <div class="dropdown-item" data-action="ampToAmp">
+                                    <i class="fa-solid fa-ampersand"></i> <code>&amp;amp;</code> to <code>&amp;</code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Split Tools -->
+                <div class="tool-group">
+                    <button class="tool-btn" id="splitBtn" aria-expanded="false">
+                        <i class="fa-solid fa-scissors"></i> Split
+                    </button>
+                    <div class="dropdown-menu" id="splitMenu">
+                        <div class="dropdown-item" data-action="splitComma">
+                            <i class="fa-solid fa-grip-lines"></i> By comma
+                        </div>
+                        <div class="dropdown-item" data-action="splitDot">
+                            <i class="fa-solid fa-circle"></i> By period
+                        </div>
+                        <div class="dropdown-item" data-action="splitSpace">
+                            <i class="fa-solid fa-arrows-left-right"></i> By space
+                        </div>
+                        <div class="dropdown-item" data-action="splitTab">
+                            <i class="fa-solid fa-arrow-right"></i> By tab
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Sort Tools -->
+                <div class="tool-group">
+                    <button class="tool-btn" id="sortBtn" aria-expanded="false">
+                        <i class="fa-solid fa-arrow-down-wide-short"></i> Sort
+                    </button>
+                    <div class="dropdown-menu" id="sortMenu">
+                        <div class="dropdown-item" data-action="sortAZ">
+                            <i class="fa-solid fa-arrow-down-a-z"></i> Sort A to Z
+                        </div>
+                        <div class="dropdown-item" data-action="sortZA">
+                            <i class="fa-solid fa-arrow-up-z-a"></i> Sort Z to A
+                        </div>
+                        <div class="dropdown-item" data-action="sortLengthAsc">
+                            <i class="fa-solid fa-arrow-down-1-9"></i> Length ↑
+                        </div>
+                        <div class="dropdown-item" data-action="sortLengthDesc">
+                            <i class="fa-solid fa-arrow-up-9-1"></i> Length ↓
+                        </div>
+                        <div class="dropdown-item" data-action="shuffle">
+                            <i class="fa-solid fa-shuffle"></i> Shuffle
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Remove Tools -->
+                <div class="tool-group">
+                    <button class="tool-btn" id="removeBtn" aria-expanded="false">
+                        <i class="fa-solid fa-eraser"></i> Remove
+                    </button>
+                    <div class="dropdown-menu" id="removeMenu">
+                        <div class="dropdown-item" data-action="removeDuplicates">
+                            <i class="fa-solid fa-clone"></i> Duplicate lines
+                        </div>
+                        <div class="dropdown-item" data-action="removeEmpty">
+                            <i class="fa-regular fa-rectangle-xmark"></i> Empty lines
+                        </div>
+                        <div class="dropdown-item">
+                            <i class="fa-solid fa-filter-circle-xmark"></i> Without
+                            <div class="submenu">
+                                <div class="dropdown-item" data-action="noDefis">
+                                    <i class="fa-solid fa-minus"></i> <code>-</code>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <div class="dropdown-item" data-action="removeNumbers">
+                            <i class="fa-solid fa-hashtag"></i> Digits
+                        </div>
+                        <div class="dropdown-item">
+                            <i class="fa-solid fa-font"></i> Letters
+                            <div class="submenu">
+                                <div class="dropdown-item" data-action="removeWordsEn">
+                                    <i class="fa-solid fa-language"></i> Latin letters
+                                </div>
+                                <div class="dropdown-item" data-action="removeWordsRu">
+                                    <i class="fa-solid fa-language"></i> Cyrillic letters
+                                </div>
+                                <div class="dropdown-item" data-action="removeWordsAll">
+                                    <i class="fa-solid fa-trash-can"></i> All letters
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dropdown-item">
+                            <i class="fa-solid fa-icons"></i> Characters
+                            <div class="submenu">
+                                <div class="dropdown-item" data-action="removeCharAll">
+                                    <i class="fa-solid fa-trash-can"></i> All symbols
+                                </div>
+                                <div class="dropdown-item" data-action="removeChar1">
+                                    <i class="fa-solid fa-quote-right"></i> <code>'</code>
+                                </div>
+                                <div class="dropdown-item" data-action="removeChar2">
+                                    <i class="fa-solid fa-quote-right"></i> <code>"</code>
+                                </div>
+                                <div class="dropdown-item" data-action="removeChar3">
+                                    <i class="fa-solid fa-grip-lines"></i> <code>,</code>
+                                </div>
+                                <div class="dropdown-item" data-action="removeChar4">
+                                    <i class="fa-solid fa-circle"></i> <code>.</code>
+                                </div>
+                                <div class="dropdown-item" data-action="removeChar5">
+                                    <i class="fa-solid fa-semicolon"></i> <code>;</code>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dropdown-item">
+                            <i class="fa-solid fa-arrows-left-right-to-line"></i> Spaces
+                            <div class="submenu">
+                                <div class="dropdown-item" data-action="removeSpaceClear">
+                                    <i class="fa-solid fa-broom"></i> Extra spaces
+                                </div>
+                                <div class="dropdown-item" data-action="removeSpaceLtrim">
+                                    <i class="fa-solid fa-outdent"></i> Leading spaces
+                                </div>
+                                <div class="dropdown-item" data-action="removeSpaceRtrim">
+                                    <i class="fa-solid fa-indent"></i> Trailing spaces
+                                </div>
+                                <div class="dropdown-item" data-action="removeSpaceTrim">
+                                    <i class="fa-solid fa-arrows-left-right-to-line"></i> Leading & trailing
+                                </div>
+                                <div class="dropdown-item" data-action="removeSpaceDuble">
+                                    <i class="fa-solid fa-down-left-and-up-right-to-center"></i> Double spaces
+                                </div>
+                                <div class="dropdown-item" data-action="removeSpaceAll">
+                                    <i class="fa-solid fa-trash-can"></i> All spaces
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <div class="dropdown-item">
+                            <i class="fa-solid fa-code"></i> HTML tags
+                            <div class="submenu">
+                                <div class="dropdown-item" data-action="removeTagAll">
+                                    <i class="fa-solid fa-trash-can"></i> All tags
+                                </div>
+                                <div class="dropdown-item" data-action="removeTagDiv">
+                                    <i class="fa-solid fa-square"></i> <code>&lt;div&gt;</code>
+                                </div>
+                                <div class="dropdown-item" data-action="removeTagP">
+                                    <i class="fa-solid fa-paragraph"></i> <code>&lt;p&gt;</code>
+                                </div>
+                                <div class="dropdown-item" data-action="removeTagUl">
+                                    <i class="fa-solid fa-list-ul"></i> <code>&lt;ul&gt;</code>
+                                </div>
+                                <div class="dropdown-item" data-action="removeTagLi">
+                                    <i class="fa-solid fa-list"></i> <code>&lt;li&gt;</code>
+                                </div>
+                                <div class="dropdown-item" data-action="removeTagTr">
+                                    <i class="fa-solid fa-table"></i> <code>&lt;tr&gt;</code>
+                                </div>
+                                <div class="dropdown-item" data-action="removeTagTd">
+                                    <i class="fa-solid fa-table-cells"></i> <code>&lt;td&gt;</code>
+                                </div>
+                                <div class="dropdown-item" data-action="removeTagSpan">
+                                    <i class="fa-solid fa-inbox"></i> <code>&lt;span&gt;</code>
+                                </div>
+                                <div class="dropdown-item" data-action="removeTagI">
+                                    <i class="fa-solid fa-italic"></i> <code>&lt;i&gt;</code>
+                                </div>
+                                <div class="dropdown-item" data-action="removeTagFont">
+                                    <i class="fa-solid fa-font"></i> <code>&lt;font&gt;</code>
+                                </div>
+                                <div class="dropdown-item" data-action="removeTagB">
+                                    <i class="fa-solid fa-bold"></i> <code>&lt;b&gt;</code>
+                                </div>
+                                <div class="dropdown-item" data-action="removeTagStrong">
+                                    <i class="fa-solid fa-bold"></i> <code>&lt;strong&gt;</code>
+                                </div>
+                                <div class="dropdown-item" data-action="removeTagEm">
+                                    <i class="fa-solid fa-italic"></i> <code>&lt;em&gt;</code>
+                                </div>
+                                <div class="dropdown-item" data-action="removeTagA">
+                                    <i class="fa-solid fa-link"></i> <code>&lt;a&gt;</code>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <div class="dropdown-item">
+                            <i class="fa-solid fa-backward-step"></i> Remove from start
+                            <div class="submenu">
+                                <div class="dropdown-item" data-action="removeStartMarks">
+                                    <i class="fa-solid fa-remove-format"></i> Punctuation
+                                </div>
+                                <div class="dropdown-item" data-action="removeStartTab">
+                                    <i class="fa-solid fa-arrow-right-to-bracket"></i> Tab
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dropdown-item">
+                            <i class="fa-solid fa-forward-step"></i> Remove from end
+                            <div class="submenu">
+                                <div class="dropdown-item" data-action="removeEndMarks">
+                                    <i class="fa-solid fa-remove-format"></i> Punctuation
+                                </div>
+                                <div class="dropdown-item" data-action="removeEndTab">
+                                    <i class="fa-solid fa-right-from-bracket"></i> Tab
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dropdown-item">
+                            <i class="fa-solid fa-backward"></i> Remove before
+                            <div class="submenu">
+                                <div class="dropdown-item" data-action="removeBeforeSpace">
+                                    <i class="fa-solid fa-arrow-left"></i> Space
+                                </div>
+                                <div class="dropdown-item" data-action="removeBeforeTab">
+                                    <i class="fa-solid fa-arrow-left-long"></i> Tab
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dropdown-item">
+                            <i class="fa-solid fa-forward"></i> Remove after
+                            <div class="submenu">
+                                <div class="dropdown-item" data-action="removeAfterSpace">
+                                    <i class="fa-solid fa-arrow-right"></i> Space
+                                </div>
+                                <div class="dropdown-item" data-action="removeAfterTab">
+                                    <i class="fa-solid fa-arrow-right-long"></i> Tab
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            
+            <section class="input-section">
+                <div class="text-area-container">
+                    <div class="text-area-header" id="inputHeader">
+                        <div class="text-area-actions">
+                            <button class="text-area-btn clear-btn" id="clearInputBtn" title="Clear input">
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <textarea class="resizable-textarea" id="inputText" placeholder="Enter your text here..."></textarea>
+                </div>
+            </section>
+            
+            <section class="add-section">
+                <div class="add-input">
+                    <label for="addPrefix">Add at the beginning:</label>
+                    <input type="text" id="addPrefix" placeholder="Enter text...">
+                </div>
+                <div class="add-input">
+                    <label for="addSuffix">Add at the end:</label>
+                    <input type="text" id="addSuffix" placeholder="Enter text...">
+                </div>
+            </section>
+            
+            <section class="format-section">
+                <div class="format-group">
+                    <button class="format-btn active" id="listBtn">
+                        <i class="fa-solid fa-list"></i> List
+                    </button>
+                </div>
+                <div class="format-group">
+                    <button class="format-btn" id="commaBtn">
+                        <i class="fa-solid fa-table-list"></i> Comma separated
+                    </button>
+                </div>
+                <div class="format-group">
+                    <button class="format-btn" id="phpBtn">
+                        <i class="fa-brands fa-php"></i> PHP array
+                    </button>
+                </div>
+                <div class="format-group">
+                    <button class="format-btn" id="jsBtn">
+                        <i class="fa-brands fa-js"></i> JS array
+                    </button>
+                </div>
+                <div class="format-group">
+                    <button class="format-btn" id="jsonBtn">
+                        <i class="fa-solid fa-code"></i> JSON
+                    </button>
+                </div>
+    
+                <div class="text-stats" id="textStats">
+                    <div class="stat-item">
+                        <i class="fa-solid fa-text-height"></i>
+                        <span id="charCount">0</span>
+                        <span class="stat-label">characters</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fa-solid fa-align-left"></i>
+                        <span id="lineCount">0</span>
+                        <span class="stat-label">lines</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fa-solid fa-font"></i>
+                        <span id="wordCount">0</span>
+                        <span class="stat-label">words</span>
+                    </div>
+                </div>
+                
+            </section>
+            
+            <section class="result-section">
+                <div class="result-area-container">
+                    <div class="text-area-header" id="resultHeader">
+                        <div class="result-actions">
+                            <button class="text-area-btn undo-btn" id="undoBtn" title="Undo">
+                                <i class="fa-solid fa-arrow-left"></i>
+                            </button>
+                            <button class="text-area-btn redo-btn" id="redoBtn" title="Redo">
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                            <button class="apply-btn" id="applyResultBtn" title="Apply changes to input">
+                                <i class="fa-solid fa-rotate-left"></i>
+                            </button>
+                            <button class="text-area-btn copy-btn" id="copyResultBtn" title="Copy to clipboard">
+                                <i class="fa-regular fa-copy"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="editable-area" id="resultText" contenteditable="true" placeholder="Result will appear here..."></div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
