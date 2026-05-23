@@ -6,7 +6,7 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ./src:/usr/share/nginx/html:ro
+      - ./docs:/usr/share/nginx/html:ro
     security_opt:
       - no-new-privileges:true
     cap_drop:
