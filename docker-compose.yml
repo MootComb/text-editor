@@ -1,8 +1,8 @@
 version: '3.8'
 services:
-  utilities:
+  text-editor:
     image: nginx:alpine
-    container_name: utilities
+    container_name: text-editor
     ports:
       - "80:80"
     volumes:
