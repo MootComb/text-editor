@@ -1,7 +1,7 @@
 /**
  * Text Editor
  * A powerful text manipulation tool with real-time processing
- * @version 3.1.0
+ * @version 3.2.0
  */
 
 'use strict';
@@ -263,8 +263,12 @@ function applyReplace(lines, action) {
         case 'lowercase': result = text.toLowerCase(); break;
         case 'capitalizeFirst': result = text.charAt(0).toUpperCase() + text.slice(1).toLowerCase(); break;
         case 'capitalizeWords': result = text.replace(/\b\w/g, c => c.toUpperCase()); break;
+        case 'invertCase': result = text.split('').map(char => char === char.toUpperCase() ? char.toLowerCase() : char.toUpperCase()).join(''); break;
         case 'singleToDouble': result = text.replace(/'/g, '"'); break;
         case 'doubleToSingle': result = text.replace(/"/g, "'"); break;
+        case 'singleToGuillemets': result = text.replace(/'([^']*)'/g, '«$1»'); break;
+        case 'doubleToGuillemets': result = text.replace(/"([^"]*)"/g, '«$1»'); break;
+        case 'ampToAmp': result = text.replace(/&amp;/g, '&'); break;
         default: result = text;
     }
     
@@ -301,17 +305,45 @@ function applyRemove(lines, action) {
     switch(action) {
         case 'removeDuplicates': return [...new Set(lines)];
         case 'removeEmpty': return lines.filter(l => l.trim());
+        case 'noDefis': return lines.map(l => l.replace(/-/g, ''));
         case 'removeNumbers': return lines.map(l => l.replace(/\d/g, ''));
         case 'removeWordsEn': return lines.map(l => l.replace(/[a-zA-Z]/g, ''));
         case 'removeWordsRu': return lines.map(l => l.replace(/[а-яА-ЯёЁ]/g, ''));
+        case 'removeWordsAll': return lines.map(l => l.replace(/[a-zA-Zа-яА-ЯёЁ]/g, ''));
+        case 'removeCharAll': return lines.map(l => l.replace(/[^\w\s]/g, ''));
         case 'removeChar1': return lines.map(l => l.replace(/'/g, ''));
         case 'removeChar2': return lines.map(l => l.replace(/"/g, ''));
         case 'removeChar3': return lines.map(l => l.replace(/,/g, ''));
+        case 'removeChar4': return lines.map(l => l.replace(/\./g, ''));
+        case 'removeChar5': return lines.map(l => l.replace(/;/g, ''));
+        case 'removeSpaceClear': return lines.map(l => l.replace(/\s+/g, ' ').trim());
+        case 'removeSpaceLtrim': return lines.map(l => l.replace(/^\s+/, ''));
+        case 'removeSpaceRtrim': return lines.map(l => l.replace(/\s+$/, ''));
         case 'removeSpaceTrim': return lines.map(l => l.trim());
+        case 'removeSpaceDuble': return lines.map(l => l.replace(/  +/g, ' '));
         case 'removeSpaceAll': return lines.map(l => l.replace(/\s/g, ''));
         case 'removeTagAll': return lines.map(l => l.replace(/<[^>]*>/g, ''));
+        case 'removeTagDiv': return lines.map(l => l.replace(/<\/?div[^>]*>/g, ''));
+        case 'removeTagP': return lines.map(l => l.replace(/<\/?p[^>]*>/g, ''));
+        case 'removeTagUl': return lines.map(l => l.replace(/<\/?ul[^>]*>/g, ''));
+        case 'removeTagLi': return lines.map(l => l.replace(/<\/?li[^>]*>/g, ''));
+        case 'removeTagTr': return lines.map(l => l.replace(/<\/?tr[^>]*>/g, ''));
+        case 'removeTagTd': return lines.map(l => l.replace(/<\/?td[^>]*>/g, ''));
+        case 'removeTagSpan': return lines.map(l => l.replace(/<\/?span[^>]*>/g, ''));
+        case 'removeTagI': return lines.map(l => l.replace(/<\/?i[^>]*>/g, ''));
+        case 'removeTagFont': return lines.map(l => l.replace(/<\/?font[^>]*>/g, ''));
+        case 'removeTagB': return lines.map(l => l.replace(/<\/?b[^>]*>/g, ''));
+        case 'removeTagStrong': return lines.map(l => l.replace(/<\/?strong[^>]*>/g, ''));
+        case 'removeTagEm': return lines.map(l => l.replace(/<\/?em[^>]*>/g, ''));
+        case 'removeTagA': return lines.map(l => l.replace(/<\/?a[^>]*>/g, ''));
         case 'removeStartMarks': return lines.map(l => l.replace(/^[^\w\s]+/, ''));
         case 'removeEndMarks': return lines.map(l => l.replace(/[^\w\s]+$/, ''));
+        case 'removeStartTab': return lines.map(l => l.replace(/^\t+/, ''));
+        case 'removeEndTab': return lines.map(l => l.replace(/\t+$/, ''));
+        case 'removeBeforeSpace': return lines.map(l => l.replace(/.*(?=\s)/, ''));
+        case 'removeBeforeTab': return lines.map(l => l.replace(/.*(?=\t)/, ''));
+        case 'removeAfterSpace': return lines.map(l => l.replace(/(?<=\s).*/, ''));
+        case 'removeAfterTab': return lines.map(l => l.replace(/(?<=\t).*/, ''));
         default: return lines;
     }
 }
