@@ -23,3 +23,5 @@ HTML/CSS/JavaScript\
 
 Without Docker
 Just open src/index.html in your browser.
+
+Demo: https://mootcomb.github.io/text-editor/
