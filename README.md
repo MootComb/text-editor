@@ -19,7 +19,7 @@ Character, word, and line counter
 Text case conversion (uppercase, lowercase, title case, etc.)
 
 Tech Stack
-HTML/CSS/JavaScript\
+HTML/CSS/JavaScript
 
 Without Docker
 Just open src/index.html in your browser.
